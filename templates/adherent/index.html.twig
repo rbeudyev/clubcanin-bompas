@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Adhérents - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-people-fill text-warning me-3"></i>
+                    Nos Adhérents
+                </h1>
+                <p class="lead mb-4">
+                    Liste complète des membres du club canin
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="bg-white rounded-circle p-4 d-inline-block shadow">
+                    <i class="bi bi-person-badge text-club-green" style="font-size: 4rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Adherents List -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="text-white">
+                        <i class="bi bi-list-ul me-2"></i>
+                        Tous les adhérents ({{ adherents|length }})
+                    </h2>
+                    <a href="{{ path('app_admin') }}" class="btn btn-outline-light">
+                        <i class="bi bi-arrow-left me-2"></i>Retour à l'administration
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-0">
+                        {% if adherents|length > 0 %}
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-club-green">
+                                                <i class="bi bi-person-fill me-1"></i>Nom
+                                            </th>
+                                            <th class="text-club-green">
+                                                <i class="bi bi-person-fill me-1"></i>Prénom
+                                            </th>
+                                            <th class="text-club-green">
+                                                <i class="bi bi-envelope-fill me-1"></i>Email
+                                            </th>
+                                            <th class="text-club-green">
+                                                <i class="bi bi-telephone-fill me-1"></i>Téléphone
+                                            </th>
+                                            <th class="text-club-green">
+                                                <i class="bi bi-calendar-check-fill me-1"></i>Date d'adhésion
+                                            </th>
+                                            <th class="text-center text-club-green">
+                                                <i class="bi bi-gear-fill me-1"></i>Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for adherent in adherents %}
+                                        <tr>
+                                            <td class="fw-bold">{{ adherent.nom }}</td>
+                                            <td>{{ adherent.prenom }}</td>
+                                            <td>
+                                                <a href="mailto:{{ adherent.email }}" class="text-decoration-none">
+                                                    {{ adherent.email }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="tel:{{ adherent.telephone }}" class="text-decoration-none">
+                                                    {{ adherent.telephone }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {% if adherent.dateAdhesion %}
+                                                    <span class="badge bg-success">
+                                                        {{ adherent.dateAdhesion|date('d/m/Y') }}
+                                                    </span>
+                                                {% else %}
+                                                    <span class="text-muted">-</span>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group">
+                                                    <a href="{{ path('app_adherent_show', {'id': adherent.id}) }}" 
+                                                       class="btn btn-sm btn-primary" 
+                                                       title="Voir les détails">
+                                                        <i class="bi bi-eye"></i>
+                                                    </a>
+                                                    <a href="{{ path('app_adherent_edit', {'id': adherent.id}) }}" 
+                                                       class="btn btn-sm btn-warning" 
+                                                       title="Modifier">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="text-center py-5">
+                                <i class="bi bi-inbox" style="font-size: 4rem; color: #ccc;"></i>
+                                <p class="text-muted mt-3 mb-0">Aucun adhérent enregistré pour le moment</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

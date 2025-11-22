@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ adherent.prenom }} {{ adherent.nom }} - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-person-circle text-warning me-3"></i>
+                    {{ adherent.prenom }} {{ adherent.nom }}
+                </h1>
+                <p class="lead mb-4">
+                    Informations détaillées de l'adhérent
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="bg-white rounded-circle p-4 d-inline-block shadow">
+                    <i class="bi bi-person-badge text-club-green" style="font-size: 4rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Adherent Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="text-muted mb-1">
+                                        <i class="bi bi-person-fill me-2"></i>Nom
+                                    </label>
+                                    <h5 class="text-club-green">{{ adherent.nom }}</h5>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="text-muted mb-1">
+                                        <i class="bi bi-person-fill me-2"></i>Prénom
+                                    </label>
+                                    <h5 class="text-club-green">{{ adherent.prenom }}</h5>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="text-muted mb-1">
+                                        <i class="bi bi-envelope-fill me-2"></i>Email
+                                    </label>
+                                    <h5 class="text-club-green">
+                                        <a href="mailto:{{ adherent.email }}" class="text-decoration-none text-club-green">
+                                            {{ adherent.email }}
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="text-muted mb-1">
+                                        <i class="bi bi-telephone-fill me-2"></i>Téléphone
+                                    </label>
+                                    <h5 class="text-club-green">
+                                        <a href="tel:{{ adherent.telephone }}" class="text-decoration-none text-club-green">
+                                            {{ adherent.telephone }}
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                            
+                            {% if adherent.dateAdhesion %}
+                            <div class="col-12">
+                                <div class="info-item">
+                                    <label class="text-muted mb-1">
+                                        <i class="bi bi-calendar-check-fill me-2"></i>Date d'adhésion
+                                    </label>
+                                    <h5 class="text-club-green">{{ adherent.dateAdhesion|date('d/m/Y') }}</h5>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-flex gap-2 justify-content-center mt-5">
+                            <a href="{{ path('app_adherent_index') }}" class="btn btn-outline-club btn-lg">
+                                <i class="bi bi-arrow-left me-2"></i>Retour à la liste
+                            </a>
+                            <a href="{{ path('app_adherent_edit', {'id': adherent.id}) }}" class="btn btn-club btn-lg">
+                                <i class="bi bi-pencil-fill me-2"></i>Modifier
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    <i class="bi bi-trophy me-3"></i>Résultats
+                </h1>
+                <p class="lead">Consultez nos derniers résultats de compétitions.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        {% if results|length > 0 %}
+            <div class="row g-4">
+                {% for result in results %}
+                <div class="col-lg-6 col-xl-4">
+                    <div class="card h-100 shadow-sm border-0 hover-lift">
+                        {% if result.image %}
+                            <div class="position-relative">
+                                <img src="{{ asset('uploads/' ~ result.image) }}" class="card-img-top" alt="{{ result.title }}" style="height: 250px; object-fit: cover;">
+                                <div class="position-absolute top-0 end-0 m-3">
+                                    <span class="badge bg-club-gold fs-6 px-2 py-1">
+                                        <i class="bi bi-trophy me-1"></i>Résultat
+                                    </span>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column p-4">
+                            <h5 class="card-title text-club-green fw-bold mb-3">{{ result.title }}</h5>
+                            
+                            <div class="mb-3">
+                                {% if result.eventDate %}
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-calendar text-club-green me-2"></i>
+                                        <span class="text-secondary">{{ result.eventDate|date('d/m/Y') }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            {% if result.description %}
+                                <p class="card-text text-secondary flex-grow-1 lh-lg mb-3">{{ result.description|length > 100 ? result.description|slice(0, 100) ~ '...' : result.description }}</p>
+                            {% endif %}
+                            
+                            {% if result.classement %}
+                                <div class="bg-light p-3 rounded-3 mb-3">
+                                    <h6 class="text-club-green fw-bold mb-2">
+                                        <i class="bi bi-award me-2"></i>Classement
+                                    </h6>
+                                    <p class="mb-0 text-secondary small">{{ result.classement|length > 80 ? result.classement|slice(0, 80) ~ '...' : result.classement }}</p>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="d-flex gap-2 mt-auto">
+                                <a href="{{ path('app_result_show', {'id': result.id}) }}" class="btn btn-primary btn-sm flex-fill">
+                                    <i class="bi bi-eye me-1"></i>Voir détails
+                                </a>
+                                <a href="{{ path('app_result_edit', {'id': result.id}) }}" class="btn btn-outline-club btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <div class="card border-0 bg-light">
+                    <div class="card-body py-5">
+                        <i class="bi bi-trophy text-secondary mb-3" style="font-size: 4rem;"></i>
+                        <h4 class="text-secondary mb-3">Aucun résultat pour le moment</h4>
+                        <p class="text-secondary mb-4">Les résultats de nos compétitions seront bientôt disponibles !</p>
+                        <a href="{{ path('app_result_new') }}" class="btn btn-club">
+                            <i class="bi bi-plus-circle me-2"></i>Ajouter le premier résultat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if results|length > 0 %}
+        <div class="text-center mt-5">
+            <a href="{{ path('app_result_new') }}" class="btn btn-club btn-lg">
+                <i class="bi bi-plus-circle me-2"></i>Ajouter un nouveau résultat
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

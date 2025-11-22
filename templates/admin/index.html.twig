@@ -1,0 +1,385 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-gear-fill text-warning me-3"></i>
+                    Administration du Club
+                </h1>
+                <p class="lead mb-4">
+                    Gérez les événements, résultats et intervenants du club.
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="bg-white rounded-circle p-4 d-inline-block shadow">
+                    <i class="bi bi-shield-check text-club-green" style="font-size: 4rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Flash Messages -->
+{% for message in app.flashes('success') %}
+    <div class="container mt-4">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+        </div>
+    </div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+    <div class="container mt-4">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+        </div>
+    </div>
+{% endfor %}
+
+<!-- Administration Dashboard -->
+<section class="py-5">
+    <div class="container">
+        <!-- Événements -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-club-light text-white d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0 d-flex align-items-center">
+                            <span class="icon-circle icon-circle-primary">
+                                <i class="bi bi-calendar-event"></i>
+                            </span>Événements
+                        </h3>
+                        <a href="{{ path('app_event_new') }}" class="btn btn-warning">
+                            <i class="bi bi-plus-circle me-1"></i>Nouvel événement
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        {% if events|length > 0 %}
+                            <div class="row">
+                                {% for event in events %}
+                                <div class="col-lg-6 col-xl-4 mb-3">
+                                    <div class="card border-0 bg-light">
+                                        <div class="card-body p-3">
+                                            <h6 class="card-title text-club-green mb-2">{{ event.title }}</h6>
+                                            {% if event.date %}
+                                                <p class="text-secondary mb-1 small">
+                                                    <i class="bi bi-calendar me-1"></i>{{ event.date|date('d/m/Y H:i') }}
+                                                </p>
+                                            {% endif %}
+                                            {% if event.location %}
+                                                <p class="text-secondary mb-2 small">
+                                                    <i class="bi bi-geo-alt me-1"></i>{{ event.location }}
+                                                </p>
+                                            {% endif %}
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <a href="{{ path('app_event_show', {'id': event.id}) }}" class="btn btn-primary btn-sm" title="Voir les détails">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="btn btn-warning btn-sm" title="Modifier">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form method="post" action="{{ path('app_event_delete', {'id': event.id}) }}" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');">
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-3">
+                                <span class="icon-circle-lg icon-circle-secondary">
+                                    <i class="bi bi-calendar-x"></i>
+                                </span>
+                                <p class="text-secondary mt-2">Aucun événement</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Résultats -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-club-light text-white d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0 d-flex align-items-center">
+                            <span class="icon-circle icon-circle-warning">
+                                <i class="bi bi-trophy"></i>
+                            </span>Résultats
+                        </h3>
+                        <a href="{{ path('app_result_new') }}" class="btn btn-warning">
+                            <i class="bi bi-plus-circle me-1"></i>Nouveau résultat
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        {% if results|length > 0 %}
+                            <div class="row">
+                                {% for result in results %}
+                                <div class="col-lg-6 col-xl-4 mb-3">
+                                    <div class="card border-0 bg-light">
+                                        <div class="card-body p-3">
+                                            <h6 class="card-title text-club-green mb-2">{{ result.title }}</h6>
+                                            {% if result.eventDate %}
+                                                <p class="text-secondary mb-1 small">
+                                                    <i class="bi bi-calendar me-1"></i>{{ result.eventDate|date('d/m/Y') }}
+                                                </p>
+                                            {% endif %}
+                                            {% if result.classement %}
+                                                <p class="text-secondary mb-2 small">
+                                                    <i class="bi bi-trophy me-1"></i>{{ result.classement }}
+                                                </p>
+                                            {% endif %}
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <a href="{{ path('app_result_show', {'id': result.id}) }}" class="btn btn-primary btn-sm" title="Voir les détails">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{{ path('app_result_edit', {'id': result.id}) }}" class="btn btn-warning btn-sm" title="Modifier">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form method="post" action="{{ path('app_result_delete', {'id': result.id}) }}" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce résultat ?');">
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-3">
+                                <span class="icon-circle-lg icon-circle-secondary">
+                                    <i class="bi bi-trophy"></i>
+                                </span>
+                                <p class="text-secondary mt-2">Aucun résultat</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Adhérents -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-club-light text-white d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0 d-flex align-items-center">
+                            <span class="icon-circle icon-circle-info">
+                                <i class="bi bi-people-fill"></i>
+                            </span>Adhérents
+                        </h3>
+                        <div class="d-flex gap-2">
+                            <a href="{{ path('app_adherent_index') }}" class="btn btn-info">
+                                <i class="bi bi-list me-1"></i>Voir tous
+                            </a>
+                            <a href="{{ path('app_admin_adherent_email') }}" class="btn btn-success">
+                                <i class="bi bi-envelope-paper-heart me-1"></i>Contacter les adhérents
+                            </a>
+                            <a href="{{ path('app_admin_adherent_new') }}" class="btn btn-warning">
+                                <i class="bi bi-plus-circle me-1"></i>Nouvel adhérent
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% if adherents|length > 0 %}
+                            <div class="row">
+                                {% for adherent in adherents %}
+                                <div class="col-lg-6 col-xl-4 mb-3">
+                                    <div class="card border-0 bg-light">
+                                        <div class="card-body p-3">
+                                            <h6 class="card-title text-club-green mb-2">
+                                                {{ adherent.prenom }} {{ adherent.nom }}
+                                            </h6>
+                                            {% if adherent.email %}
+                                                <p class="text-secondary mb-1 small">
+                                                    <i class="bi bi-envelope me-1"></i>{{ adherent.email }}
+                                                </p>
+                                            {% endif %}
+                                            {% if adherent.telephone %}
+                                                <p class="text-secondary mb-1 small">
+                                                    <i class="bi bi-telephone me-1"></i>{{ adherent.telephone }}
+                                                </p>
+                                            {% endif %}
+                                            {% if adherent.dateAdhesion %}
+                                                <p class="text-secondary mb-2 small">
+                                                    <i class="bi bi-calendar-check me-1"></i>Adhésion : {{ adherent.dateAdhesion|date('d/m/Y') }}
+                                                </p>
+                                            {% endif %}
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <a href="{{ path('app_adherent_show', {'id': adherent.id}) }}" class="btn btn-primary btn-sm" title="Voir les détails">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{{ path('app_admin_adherent_edit', {'id': adherent.id}) }}" class="btn btn-warning btn-sm" title="Modifier">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form method="post" action="{{ path('app_admin_adherent_delete', {'id': adherent.id}) }}" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet adhérent ?');">
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-3">
+                                <span class="icon-circle-lg icon-circle-secondary">
+                                    <i class="bi bi-people"></i>
+                                </span>
+                                <p class="text-secondary mt-2">Aucun adhérent</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intervenants -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-club-light text-white d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0 d-flex align-items-center">
+                            <span class="icon-circle icon-circle-success">
+                                <i class="bi bi-people-fill"></i>
+                            </span>Intervenants
+                        </h3>
+                        <a href="{{ path('app_intervenant_new') }}" class="btn btn-warning">
+                            <i class="bi bi-plus-circle me-1"></i>Nouvel intervenant
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        {% if intervenants|length > 0 %}
+                            <div class="row">
+                                {% for intervenant in intervenants %}
+                                <div class="col-lg-6 col-xl-4 mb-3">
+                                    <div class="card border-0 bg-light">
+                                        <div class="card-body p-3">
+                                            <h6 class="card-title text-club-green mb-2">{{ intervenant.name }}</h6>
+                                            {% if intervenant.role %}
+                                                <p class="text-secondary mb-1 small">
+                                                    <i class="bi bi-star me-1"></i>{{ intervenant.role }}
+                                                </p>
+                                            {% endif %}
+                                            {% if intervenant.description %}
+                                                <p class="text-secondary mb-2 small">
+                                                    {{ intervenant.description|length > 50 ? intervenant.description|slice(0, 50) ~ '...' : intervenant.description }}
+                                                </p>
+                                            {% endif %}
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <a href="{{ path('app_intervenant_show', {'id': intervenant.id}) }}" class="btn btn-primary btn-sm" title="Voir les détails">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{{ path('app_intervenant_edit', {'id': intervenant.id}) }}" class="btn btn-warning btn-sm" title="Modifier">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form method="post" action="{{ path('app_intervenant_delete', {'id': intervenant.id}) }}" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet intervenant ?');">
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-3">
+                                <span class="icon-circle-lg icon-circle-secondary">
+                                    <i class="bi bi-people"></i>
+                                </span>
+                                <p class="text-secondary mt-2">Aucun intervenant</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informations -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-club-light text-white d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0 d-flex align-items-center">
+                            <span class="icon-circle icon-circle-info">
+                                <i class="bi bi-info-circle"></i>
+                            </span>Informations
+                        </h3>
+                        <a href="{{ path('app_admin_information_new') }}" class="btn btn-warning">
+                            <i class="bi bi-plus-circle me-1"></i>Nouvelle information
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        {% if informations|length > 0 %}
+                            <div class="row">
+                                {% for information in informations %}
+                                <div class="col-lg-6 col-xl-4 mb-3">
+                                    <div class="card border-0 bg-light">
+                                        <div class="card-body p-3">
+                                            <h6 class="card-title text-club-green mb-2">{{ information.title }}</h6>
+                                            {% if information.contenu %}
+                                                <p class="text-secondary mb-1 small">
+                                                    {{ information.contenu|length > 50 ? information.contenu|slice(0, 50) ~ '...' : information.contenu }}
+                                                </p>
+                                            {% endif %}
+                                            {% if information.dateDebut %}
+                                                <p class="text-secondary mb-1 small">
+                                                    <i class="bi bi-calendar me-1"></i>Début : {{ information.dateDebut|date('d/m/Y') }}
+                                                </p>
+                                            {% endif %}
+                                            {% if information.dateFin %}
+                                                <p class="text-secondary mb-2 small">
+                                                    <i class="bi bi-calendar-check me-1"></i>Fin : {{ information.dateFin|date('d/m/Y') }}
+                                                </p>
+                                            {% endif %}
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <a href="{{ path('app_informations_show', {'id': information.id}) }}" class="btn btn-primary btn-sm" title="Voir les détails">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{{ path('app_admin_information_edit', {'id': information.id}) }}" class="btn btn-warning btn-sm" title="Modifier">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form method="post" action="{{ path('app_admin_information_delete', {'id': information.id}) }}" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette information ?');">
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-3">
+                                <span class="icon-circle-lg icon-circle-secondary">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                                <p class="text-secondary mt-2">Aucune information</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

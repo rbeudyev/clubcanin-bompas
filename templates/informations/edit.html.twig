@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'Information - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    <i class="bi bi-pencil-square me-3"></i>Modifier l'information
+                </h1>
+                <p class="lead">Modifiez les informations de cette actualité</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    {{ include('informations/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+</section>
+
+<!-- Flash Messages -->
+{% for message in app.flashes('success') %}
+    <div class="container mt-4">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+        </div>
+    </div>
+{% endfor %}
+
+<!-- Delete Section -->
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Zone de danger
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-secondary mb-3">Si vous souhaitez supprimer cette information, utilisez le bouton ci-dessous. Cette action est irréversible.</p>
+                    {{ include('informations/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

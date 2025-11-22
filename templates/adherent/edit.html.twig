@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'Adhérent - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold text-white mb-3">
+                    <i class="bi bi-person-gear me-3"></i>Modifier l'Adhérent
+                </h1>
+                <p class="lead text-light">Modifiez les informations de cet adhérent</p>
+            </div>
+
+            {{ include('adherent/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_adherent_index') }}" class="btn btn-outline-light btn-lg me-3">
+                    <i class="bi bi-arrow-left me-2"></i>Retour à la liste
+                </a>
+                <a href="{{ path('app_adherent_show', {'id': adherent.id}) }}" class="btn btn-outline-info btn-lg">
+                    <i class="bi bi-eye me-2"></i>Voir les détails
+                </a>
+            </div>
+
+            <div class="mt-5">
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-3"></i>
+                    <div>
+                        <strong>Attention :</strong> La suppression d'un adhérent est irréversible.
+                        Toutes les données associées seront définitivement supprimées.
+                    </div>
+                </div>
+                {{ include('adherent/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

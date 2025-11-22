@@ -1,0 +1,352 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    Bienvenue au Club Canin de Bompas
+                </h1>
+                <p class="lead mb-5">
+                    Une association dédiée à l'éducation canine et aux activités sportives pour chiens et maîtres.
+                </p>
+                <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+                    <a href="{{ path('app_presentation') }}" class="btn btn-primary">
+                        <i class="bi bi-info-circle me-2"></i>Découvrir le club
+                    </a>
+                    <a href="#contact" class="btn btn-outline-light">
+                        <i class="bi bi-telephone me-2"></i>Nous contacter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Informations Importantes -->
+{% if informations|length > 0 %}
+<section class="py-5 bg-club-green">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2 class="text-center mb-5" style="font-size: 2.5rem; font-weight: bold; color: #dc3545;">
+                    <i class="bi bi-info-circle-fill me-2"></i>Informations Importantes
+                </h2>
+                
+                {% for information in informations %}
+                <div class="card shadow-lg mb-4 border-0">
+                    <div class="card-header bg-club-light text-white">
+                        <h3 class="mb-0 d-flex align-items-center">
+                            <i class="bi bi-megaphone me-3"></i>{{ information.title }}
+                        </h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p class="lead mb-3">{{ information.contenu }}</p>
+                            </div>
+                            {% if information.dateDebut or information.dateFin %}
+                            <div class="col-md-4">
+                                <div class="bg-light p-3 rounded-3">
+                                    {% if information.dateDebut %}
+                                    <div class="mb-2">
+                                        <i class="bi bi-calendar-event text-club-green me-2"></i>
+                                        <strong>Début :</strong> {{ information.dateDebut|date('d/m/Y H:i') }}
+                                    </div>
+                                    {% endif %}
+                                    {% if information.dateFin %}
+                                    <div>
+                                        <i class="bi bi-calendar-check text-club-green me-2"></i>
+                                        <strong>Fin :</strong> {{ information.dateFin|date('d/m/Y H:i') }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Informations du Club -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card h-100 shadow-sm border-0 hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-club-green rounded-circle p-3 d-inline-block mb-3">
+                            <i class="bi bi-people-fill text-white" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="card-title text-club-green fw-bold mb-3">Notre Association</h5>
+                        <p class="card-text text-secondary lh-lg">
+                            Association loi 1901 affiliée à l'ACTLR, nous proposons des entraînements 
+                            d'éducation canine par des moniteurs bénévoles diplômés.
+                        </p>
+                        <a href="{{ path('app_presentation') }}" class="btn btn-club">
+                            <i class="bi bi-info-circle me-2"></i>En savoir plus
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card h-100 shadow-sm border-0 hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-club-green rounded-circle p-3 d-inline-block mb-3">
+                            <i class="bi bi-calendar-event text-white" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="card-title text-club-green fw-bold mb-3">Nos Activités</h5>
+                        <p class="card-text text-secondary lh-lg">
+                            École du chiot, éducation jeunes et adultes, agility, hoopers, 
+                            obé-tricks... Des activités adaptées à tous les âges.
+                        </p>
+                        <a href="{{ path('app_presentation') }}" class="btn btn-club">
+                            <i class="bi bi-arrow-right me-2"></i>Découvrir
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card h-100 shadow-sm border-0 hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-club-green rounded-circle p-3 d-inline-block mb-3">
+                            <i class="bi bi-clock text-white" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="card-title text-club-green fw-bold mb-3">Horaires</h5>
+                        <div class="text-secondary lh-lg mb-3">
+                            <div class="mb-2">
+                                <strong class="text-club-green">Lundi & Mardi :</strong><br>
+                                19h - 19h45
+                            </div>
+                            <div>
+                                <strong class="text-club-green">Samedi :</strong><br>
+                                9h30-10h30 & 11h-12h
+                            </div>
+                        </div>
+                        <a href="#horaires" class="btn btn-club">
+                            <i class="bi bi-calendar-check me-2"></i>Voir les horaires
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Événements à venir -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2 class="text-center mb-5 text-club-green">
+                    <i class="bi bi-calendar-check me-2"></i>Événements à venir
+                </h2>
+                
+                {% if events|length > 0 %}
+                    <div class="events-horizontal-scroll">
+                        <div class="scroll-container">
+                            <div class="scroll-content">
+                                {% for event in events %}
+                                    <div class="scroll-item">
+                                        <div class="card h-100 shadow-sm border-0 hover-lift">
+                                            {% if event.image %}
+                                                <div class="position-relative">
+                                                    <img src="{{ asset('uploads/' ~ event.image) }}" class="card-img-top" alt="{{ event.title }}" style="height: 200px; object-fit: cover;">
+                                                    <div class="position-absolute top-0 end-0 m-2">
+                                                        <span class="badge bg-club-green fs-6 px-2 py-1">
+                                                            <i class="bi bi-calendar-event me-1"></i>Événement
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                            <div class="card-body d-flex flex-column p-3">
+                                                <h5 class="text-club-green fw-bold mb-3">{{ event.title }}</h5>
+                                                
+                                                <div class="mb-3">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <i class="bi bi-calendar text-club-green me-2"></i>
+                                                        <span class="text-secondary small">
+                                                            {% if event.date %}
+                                                                {{ event.date|date('d/m/Y H:i') }}
+                                                            {% else %}
+                                                                Date à confirmer
+                                                            {% endif %}
+                                                        </span>
+                                                    </div>
+                                                    {% if event.location %}
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <i class="bi bi-geo-alt text-club-green me-2"></i>
+                                                            <span class="text-secondary small">{{ event.location }}</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                
+                                                {% if event.description %}
+                                                    <p class="text-secondary flex-grow-1 lh-sm mb-3 small">{{ event.description|length > 80 ? event.description|slice(0, 80) ~ '...' : event.description }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <!-- Navigation -->
+                        <button class="scroll-btn scroll-btn-prev" onclick="scrollEvents('prev')">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <button class="scroll-btn scroll-btn-next" onclick="scrollEvents('next')">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <div class="card border-0 bg-light">
+                            <div class="card-body py-5">
+                                <i class="bi bi-calendar-x text-secondary mb-3" style="font-size: 4rem;"></i>
+                                <h4 class="text-secondary mb-3">Aucun événement prévu</h4>
+                                <p class="text-secondary">Revenez bientôt pour découvrir nos prochains événements !</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Résultats -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 text-club-green">
+            <i class="bi bi-trophy me-2"></i>Derniers Résultats
+        </h2>
+        
+        {% if results|length > 0 %}
+            <div class="results-horizontal-scroll">
+                <div class="scroll-container">
+                    <div class="scroll-content">
+                        {% for result in results %}
+                            <div class="scroll-item">
+                                <div class="card h-100 shadow-sm border-0 hover-lift">
+                                    {% if result.image %}
+                                        <div class="position-relative">
+                                            <img src="{{ asset('uploads/' ~ result.image) }}" class="card-img-top" alt="{{ result.title }}" style="height: 200px; object-fit: cover;">
+                                            <div class="position-absolute top-0 end-0 m-2">
+                                                <span class="badge bg-club-gold fs-6 px-2 py-1">
+                                                    <i class="bi bi-trophy me-1"></i>Résultat
+                                                </span>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="card-body d-flex flex-column p-3">
+                                        <h5 class="text-club-green fw-bold mb-3">{{ result.title }}</h5>
+                                        
+                                        {% if result.eventDate %}
+                                            <div class="d-flex align-items-center mb-3">
+                                                <i class="bi bi-calendar text-club-green me-2"></i>
+                                                <span class="text-secondary small">{{ result.eventDate|date('d/m/Y') }}</span>
+                                            </div>
+                                        {% endif %}
+                                        
+                                        {% if result.description %}
+                                            <p class="text-secondary flex-grow-1 lh-sm mb-3 small">{{ result.description|length > 80 ? result.description|slice(0, 80) ~ '...' : result.description }}</p>
+                                        {% endif %}
+                                        
+                                        {% if result.classement %}
+                                            <div class="bg-light p-2 rounded-3 mb-3">
+                                                <h6 class="text-club-green fw-bold mb-2 small">
+                                                    <i class="bi bi-award me-1"></i>Classement
+                                                </h6>
+                                                <p class="mb-0 text-secondary small">{{ result.classement|length > 60 ? result.classement|slice(0, 60) ~ '...' : result.classement }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <button class="scroll-btn scroll-btn-prev" onclick="scrollResults('prev')">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="scroll-btn scroll-btn-next" onclick="scrollResults('next')">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <div class="card border-0 bg-light">
+                    <div class="card-body py-5">
+                        <i class="bi bi-trophy text-secondary mb-3" style="font-size: 4rem;"></i>
+                        <h4 class="text-secondary mb-3">Aucun résultat disponible</h4>
+                        <p class="text-secondary">Les résultats de nos compétitions seront bientôt disponibles !</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h2 class="mb-5 text-club-green">
+                    <i class="bi bi-envelope me-2"></i>Nous Contacter
+                </h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow-sm border-0 hover-lift">
+                            <div class="card-body text-center p-4">
+                                <div class="bg-club-green rounded-circle p-3 d-inline-block mb-3">
+                                    <i class="bi bi-telephone text-white" style="font-size: 2rem;"></i>
+                                </div>
+                                <h6 class="text-club-green fw-bold mb-2">Téléphone</h6>
+                                <p class="text-secondary mb-0">06.87.33.25.62</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow-sm border-0 hover-lift">
+                            <div class="card-body text-center p-4">
+                                <div class="bg-club-green rounded-circle p-3 d-inline-block mb-3">
+                                    <i class="bi bi-envelope text-white" style="font-size: 2rem;"></i>
+                                </div>
+                                <h6 class="text-club-green fw-bold mb-2">Email</h6>
+                                <p class="text-secondary mb-0">clubcaninbompas@hotmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow-sm border-0 hover-lift">
+                            <div class="card-body text-center p-4">
+                                <div class="bg-club-green rounded-circle p-3 d-inline-block mb-3">
+                                    <i class="bi bi-geo-alt text-white" style="font-size: 2rem;"></i>
+                                </div>
+                                <h6 class="text-club-green fw-bold mb-2">Adresse</h6>
+                                <p class="text-secondary mb-0">66430 Bompas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

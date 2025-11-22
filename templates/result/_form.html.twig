@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="form-container shadow-lg">
+                {{ form_start(form, {'attr': {'class': 'modern-form', 'enctype': 'multipart/form-data'}}) }}
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre du résultat'}}) }}
+                                {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_errors(form.title) }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_widget(form.eventDate, {'attr': {'class': 'form-control', 'placeholder': 'Date de l\'événement'}}) }}
+                                {{ form_label(form.eventDate, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_errors(form.eventDate) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-floating">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4, 'placeholder': 'Description du résultat'}}) }}
+                            {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_errors(form.description) }}
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(form.image, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {% if result is defined and result.image %}
+                                    <div class="mb-2">
+                                        <img src="{{ asset('uploads/' ~ result.image) }}" alt="Image actuelle" class="img-thumbnail" style="max-height: 150px;">
+                                        <p class="text-muted small mt-1">Image actuelle</p>
+                                    </div>
+                                {% endif %}
+                                {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.image) }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_widget(form.classement, {'attr': {'class': 'form-control', 'rows': 3, 'placeholder': 'Classement détaillé'}}) }}
+                                {{ form_label(form.classement, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_errors(form.classement) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-club btn-lg">
+                            <i class="bi bi-check-circle me-2"></i>{{ button_label|default('Enregistrer') }}
+                        </button>
+                        <a href="{{ path('app_admin') }}" class="btn btn-outline-club btn-lg">
+                            <i class="bi bi-arrow-left me-2"></i>Annuler
+                        </a>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

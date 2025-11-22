@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="form-container shadow-lg">
+                {{ form_start(form, {'attr': {'class': 'modern-form'}}) }}
+                    <div class="mb-4">
+                        <div class="form-floating">
+                            {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre de l\'information'}}) }}
+                            {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_errors(form.title) }}
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="mb-3">
+                            {{ form_label(form.contenu, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'rows': 6}}) }}
+                            {{ form_errors(form.contenu) }}
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(form.dateDebut, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.dateDebut) }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(form.dateFin, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.dateFin) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-club btn-lg">
+                            <i class="bi bi-check-circle me-2"></i>{{ button_label|default('Enregistrer') }}
+                        </button>
+                        <a href="{{ path('app_admin') }}" class="btn btn-outline-club btn-lg">
+                            <i class="bi bi-arrow-left me-2"></i>Annuler
+                        </a>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Informations{% endblock %}
+
+{% block body %}
+    <h1>Informations</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ information.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ information.title }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ information.contenu }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ information.dateDebut ? information.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ information.dateFin ? information.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_informations_index') }}">back to list</a>
+
+    <a href="{{ path('app_informations_edit', {'id': information.id}) }}">edit</a>
+
+    {{ include('informations/_delete_form.html.twig') }}
+{% endblock %}

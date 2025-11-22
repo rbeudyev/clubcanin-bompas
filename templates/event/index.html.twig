@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Événements - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    <i class="bi bi-calendar-event me-3"></i>Événements
+                </h1>
+                <p class="lead">Découvrez nos prochains événements et activités.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        {% if events|length > 0 %}
+            <div class="row g-4">
+                {% for event in events %}
+                <div class="col-lg-6 col-xl-4">
+                    <div class="card h-100 shadow-sm border-0 hover-lift">
+                        {% if event.image %}
+                            <div class="position-relative">
+                                <img src="{{ asset('uploads/' ~ event.image) }}" class="card-img-top" alt="{{ event.title }}" style="height: 250px; object-fit: cover;">
+                                <div class="position-absolute top-0 end-0 m-3">
+                                    <span class="badge bg-club-green fs-6 px-2 py-1">
+                                        <i class="bi bi-calendar-event me-1"></i>Événement
+                                    </span>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-club-green fw-bold mb-3">{{ event.title }}</h5>
+                            
+                            <div class="mb-3">
+                                {% if event.date %}
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-calendar text-club-green me-2"></i>
+                                        <span class="text-secondary">{{ event.date|date('d/m/Y H:i') }}</span>
+                                    </div>
+                                {% endif %}
+                                {% if event.location %}
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-geo-alt text-club-green me-2"></i>
+                                        <span class="text-secondary">{{ event.location }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            {% if event.description %}
+                                <p class="card-text text-secondary flex-grow-1">{{ event.description|length > 100 ? event.description|slice(0, 100) ~ '...' : event.description }}</p>
+                            {% endif %}
+                            
+                            <div class="d-flex gap-2 mt-auto">
+                                <a href="{{ path('app_event_show', {'id': event.id}) }}" class="btn btn-primary btn-sm flex-fill">
+                                    <i class="bi bi-eye me-1"></i>Voir détails
+                                </a>
+                                <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="btn btn-outline-club btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <div class="card border-0 bg-light">
+                    <div class="card-body py-5">
+                        <i class="bi bi-calendar-x text-secondary mb-3" style="font-size: 4rem;"></i>
+                        <h4 class="text-secondary mb-3">Aucun événement pour le moment</h4>
+                        <p class="text-secondary mb-4">Revenez bientôt pour découvrir nos prochains événements !</p>
+                        <a href="{{ path('app_event_new') }}" class="btn btn-club">
+                            <i class="bi bi-plus-circle me-2"></i>Créer le premier événement
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if events|length > 0 %}
+        <div class="text-center mt-5">
+            <a href="{{ path('app_event_new') }}" class="btn btn-club btn-lg">
+                <i class="bi bi-plus-circle me-2"></i>Créer un nouvel événement
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

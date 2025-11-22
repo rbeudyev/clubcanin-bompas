@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ result.title }} - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    <i class="bi bi-trophy me-3"></i>{{ result.title }}
+                </h1>
+                {% if result.eventDate %}
+                    <p class="lead mb-4">
+                        <i class="bi bi-calendar me-2"></i>{{ result.eventDate|date('d/m/Y') }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Result Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0">
+                    {% if result.image %}
+                        <div class="position-relative">
+                            <img src="{{ asset('uploads/' ~ result.image) }}" class="card-img-top" alt="{{ result.title }}" style="height: 400px; object-fit: cover;">
+                            <div class="position-absolute top-0 end-0 m-3">
+                                <span class="badge bg-club-gold fs-6 px-3 py-2">
+                                    <i class="bi bi-trophy me-1"></i>Résultat
+                                </span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="card-body p-4">
+                        <div class="row g-4 mb-4">
+                            {% if result.eventDate %}
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                    <div class="bg-club-green rounded-circle p-2 me-3">
+                                        <i class="bi bi-calendar text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-club-green mb-1 fw-bold">Date de l'événement</h6>
+                                        <p class="mb-0">{{ result.eventDate|date('d/m/Y') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        {% if result.description %}
+                        <div class="mb-4">
+                            <div class="bg-gradient-light p-4 rounded-3">
+                                <h6 class="text-club-green mb-3 fw-bold">
+                                    <i class="bi bi-info-circle me-2"></i>Description
+                                </h6>
+                                <p class="mb-0 lh-lg">{{ result.description }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if result.classement %}
+                        <div class="mb-4">
+                            <div class="bg-light p-4 rounded-3">
+                                <h6 class="text-club-green mb-3 fw-bold">
+                                    <i class="bi bi-award me-2"></i>Classement
+                                </h6>
+                                <p class="mb-0 lh-lg">{{ result.classement }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="d-flex flex-wrap gap-3 justify-content-center mt-5">
+                            <a href="{{ path('app_result_edit', {'id': result.id}) }}" class="btn btn-club btn-lg">
+                                <i class="bi bi-pencil me-2"></i>Modifier
+                            </a>
+                            <a href="{{ path('app_result_index') }}" class="btn btn-outline-club btn-lg">
+                                <i class="bi bi-arrow-left me-2"></i>Retour à la liste
+                            </a>
+                            <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                <i class="bi bi-trash me-2"></i>Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Confirmer la suppression
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer le résultat <strong>"{{ result.title }}"</strong> ?</p>
+                <p class="text-secondary">Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Annuler
+                </button>
+                {{ include('result/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

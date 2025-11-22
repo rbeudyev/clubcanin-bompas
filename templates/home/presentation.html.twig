@@ -1,0 +1,310 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Présentation - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    <i class="bi bi-info-circle text-light me-3"></i>
+                    Présentation du Club
+                </h1>
+                <p class="lead mb-4">
+                    Découvrez notre association, nos activités et notre équipe de moniteurs passionnés.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Présentation du Club -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-club-green text-white">
+                        <h3 class="mb-0">
+                            <i class="bi bi-building me-2"></i>Notre Association
+                        </h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <h5 class="text-club-green fw-bold mb-3">Le Club Canin de Bompas</h5>
+                                <p class="text-secondary lh-lg mb-4">
+                                    Le Club Canin de Bompas est une association loi 1901 régie par un comité élu 
+                                    conformément aux statuts. Nous sommes affiliés à l'Association Canine Territoriale 
+                                    du Languedoc Roussillon (ACTLR).
+                                </p>
+                                <div class="bg-light p-3 rounded-3">
+                                    <h6 class="text-club-green fw-bold mb-3">Informations légales</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2 d-flex align-items-center">
+                                            <i class="bi bi-check-circle text-club-green me-2"></i>
+                                            <strong>SIREN :</strong> 510 690 894
+                                        </li>
+                                        <li class="mb-2 d-flex align-items-center">
+                                            <i class="bi bi-check-circle text-club-green me-2"></i>
+                                            <strong>SIRET :</strong> 510 690 894 00017
+                                        </li>
+                                        <li class="mb-2 d-flex align-items-center">
+                                            <i class="bi bi-check-circle text-club-green me-2"></i>
+                                            <strong>Affiliation :</strong> ACTLR
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-club-green fw-bold mb-3">Notre Objectif</h5>
+                                <p class="text-secondary lh-lg mb-3">
+                                    L'objectif de l'association est de permettre aux adhérents d'avoir des compagnons 
+                                    à l'écoute et dont le comportement sera adapté à la vie en société.
+                                </p>
+                                <p class="text-secondary lh-lg">
+                                    Pour cela, l'équipe de moniteurs proposera des entraînements d'éducation collectifs 
+                                    ludiques favorisant la sociabilité et l'apprentissage des exercices de base.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Nos Activités -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 text-club-green">
+            <i class="bi bi-calendar-event me-2"></i>Nos Activités
+        </h2>
+        
+        <div class="row g-4">
+            {% for activite in activites %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-sm border-0 hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-club-green rounded-circle p-3 d-inline-block mb-3">
+                            <i class="{{ activite.icone }} text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5 class="card-title text-club-green fw-bold mb-3">{{ activite.nom }}</h5>
+                        <div class="bg-light p-2 rounded-3 mb-3">
+                            <p class="text-secondary mb-0">
+                                <i class="bi bi-clock text-club-green me-1"></i>
+                                <strong>Âge :</strong> {{ activite.age }}
+                            </p>
+                        </div>
+                        <p class="card-text text-secondary lh-lg mb-3">{{ activite.description }}</p>
+                        <div class="mt-3">
+                            <h6 class="text-club-green fw-bold mb-3">Objectifs :</h6>
+                            <ul class="list-unstyled text-start">
+                                {% for objectif in activite.objectifs %}
+                                <li class="mb-2 d-flex align-items-start">
+                                    <i class="bi bi-check-circle text-club-green me-2 mt-1"></i>
+                                    <span class="text-secondary">{{ objectif }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-lg-10 mx-auto">
+                <div class="card border-club-gold shadow-lg">
+                    <div class="card-header bg-club-gold text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-info-circle me-2"></i>Informations Importantes
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <h6 class="text-club-green fw-bold mb-3">Conditions d'adhésion</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-3 d-flex align-items-start">
+                                        <i class="bi bi-shield-check text-club-green me-2 mt-1"></i>
+                                        <span class="text-secondary">Votre chien devra être en bonne santé</span>
+                                    </li>
+                                    <li class="mb-3 d-flex align-items-start">
+                                        <i class="bi bi-shield-check text-club-green me-2 mt-1"></i>
+                                        <span class="text-secondary">Il sera obligatoirement vacciné et identifié</span>
+                                    </li>
+                                    <li class="mb-3 d-flex align-items-start">
+                                        <i class="bi bi-shield-check text-club-green me-2 mt-1"></i>
+                                        <span class="text-secondary">Les chiens catégorisés devront être en conformité avec la loi</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-club-green fw-bold mb-3">Participation des mineurs</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-3 d-flex align-items-start">
+                                        <i class="bi bi-person-check text-club-green me-2 mt-1"></i>
+                                        <span class="text-secondary">Le club est ouvert aux mineurs avec autorisation parentale</span>
+                                    </li>
+                                    <li class="mb-3 d-flex align-items-start">
+                                        <i class="bi bi-person-check text-club-green me-2 mt-1"></i>
+                                        <span class="text-secondary">Un parent devra obligatoirement être présent pendant les cours</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Nos Intervenants -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 text-club-green">
+            <i class="bi bi-people-fill me-2"></i>Nos Moniteurs
+        </h2>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto mb-4">
+                <div class="card bg-club-light text-white">
+                    <div class="card-body text-center">
+                        <h5 class="mb-3">
+                            <i class="bi bi-heart-fill me-2"></i>
+                            Une équipe de moniteurs bénévoles passionnés
+                        </h5>
+                        <p class="mb-0">
+                            Tous nos moniteurs sont diplômés dans le cadre des formations proposées par la 
+                            Centrale Canine et/ou pratiquent la compétition à haut niveau. Ils interviennent 
+                            bénévolement sur tous les entraînements.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for intervenant in intervenants %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    {% if intervenant.photo %}
+                        {% set photoUrl = intervenant.photo starts with('http')
+                            ? intervenant.photo
+                            : (intervenant.photo starts with('uploads/')
+                                ? asset(intervenant.photo)
+                                : asset('uploads/' ~ intervenant.photo)) %}
+                        <img src="{{ photoUrl }}" class="card-img-top" alt="{{ intervenant.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-club-light text-center py-5">
+                            <i class="bi bi-person-fill text-white" style="font-size: 3rem;"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body text-center">
+                        <h6 class="card-title text-club-green fw-bold mb-1">{{ intervenant.name }}</h6>
+                        <p class="text-secondary mb-2 small">
+                            {{ intervenant.role }}
+                        </p>
+                        {% if intervenant.description %}
+                            <p class="small text-secondary">{{ intervenant.description|length > 90 ? intervenant.description|slice(0, 90) ~ '...' : intervenant.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-5">
+            <div class="card border-club-green">
+                <div class="card-body">
+                    <h5 class="text-club-green mb-3">
+                        <i class="bi bi-calendar-check me-2"></i>Horaires des Entraînements
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-club-green">Lundi & Mardi</h6>
+                            <p class="text-secondary mb-2">19h - 19h45</p>
+                            <ul class="list-unstyled text-start">
+                                <li class="mb-1">
+                                    <i class="bi bi-arrow-right text-club-green me-2"></i>
+                                    Adultes (+ de 12 mois)
+                                </li>
+                                <li class="mb-1">
+                                    <i class="bi bi-arrow-right text-club-green me-2"></i>
+                                    Chiots et jeunes
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-club-green">Samedi</h6>
+                            <p class="text-secondary mb-2">9h30-10h30 & 11h-12h</p>
+                            <ul class="list-unstyled text-start">
+                                <li class="mb-1">
+                                    <i class="bi bi-arrow-right text-club-green me-2"></i>
+                                    Chiots et jeunes (9h30-10h30)
+                                </li>
+                                <li class="mb-1">
+                                    <i class="bi bi-arrow-right text-club-green me-2"></i>
+                                    Adultes (+ de 12 mois) (11h-12h)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="text-club-green mb-4">
+                    <i class="bi bi-envelope me-2"></i>Rejoignez-nous !
+                </h2>
+                <p class="lead mb-4">
+                    Vous souhaitez rejoindre notre club ou obtenir plus d'informations ? 
+                    N'hésitez pas à nous contacter !
+                </p>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="bi bi-telephone text-club-green" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Téléphone</h6>
+                                <p class="text-secondary">06.87.33.25.62</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="bi bi-envelope text-club-green" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Email</h6>
+                                <p class="text-secondary">clubcaninbompas@hotmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="bi bi-geo-alt text-club-green" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Adresse</h6>
+                                <p class="text-secondary">66430 Bompas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

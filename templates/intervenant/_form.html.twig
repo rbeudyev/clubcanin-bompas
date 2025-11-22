@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="form-container shadow-lg">
+                {{ form_start(form, {'attr': {'class': 'modern-form', 'enctype': 'multipart/form-data'}}) }}
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom de l\'intervenant'}}) }}
+                                {{ form_label(form.name, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_errors(form.name) }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_widget(form.role, {'attr': {'class': 'form-control', 'placeholder': 'Rôle ou spécialité'}}) }}
+                                {{ form_label(form.role, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_errors(form.role) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-floating">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4, 'placeholder': 'Description de l\'intervenant'}}) }}
+                            {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_errors(form.description) }}
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="mb-3">
+                            {{ form_label(form.photo, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {% if intervenant is defined and intervenant.photo %}
+                                <div class="mb-2">
+                                    <img src="{{ asset('uploads/' ~ intervenant.photo) }}" alt="Photo actuelle" class="img-thumbnail rounded-circle" style="max-height: 150px; max-width: 150px;">
+                                    <p class="text-muted small mt-1">Photo actuelle</p>
+                                </div>
+                            {% endif %}
+                            {{ form_widget(form.photo, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.photo) }}
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-club btn-lg">
+                            <i class="bi bi-check-circle me-2"></i>{{ button_label|default('Enregistrer') }}
+                        </button>
+                        <a href="{{ path('app_admin') }}" class="btn btn-outline-club btn-lg">
+                            <i class="bi bi-arrow-left me-2"></i>Annuler
+                        </a>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

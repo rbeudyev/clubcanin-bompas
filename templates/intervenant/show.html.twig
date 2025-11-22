@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ intervenant.name }} - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    <i class="bi bi-person me-3"></i>{{ intervenant.name }}
+                </h1>
+                {% if intervenant.role %}
+                    <p class="lead mb-4">
+                        <i class="bi bi-star me-2"></i>{{ intervenant.role }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Intervenant Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-4 text-center">
+                                {% if intervenant.photo %}
+                                    <img src="{{ asset('uploads/' ~ intervenant.photo) }}" class="rounded-circle mb-3" 
+                                         style="width: 200px; height: 200px; object-fit: cover;" alt="{{ intervenant.name }}">
+                                {% else %}
+                                    <div class="bg-club-green rounded-circle p-4 d-inline-block mb-3">
+                                        <i class="bi bi-person-fill text-white" style="font-size: 5rem;"></i>
+                                    </div>
+                                {% endif %}
+                                
+                                {% if intervenant.role %}
+                                    <div class="bg-light p-3 rounded-3">
+                                        <h6 class="text-club-green fw-bold mb-2">
+                                            <i class="bi bi-star-fill text-club-gold me-2"></i>Rôle
+                                        </h6>
+                                        <p class="mb-0 text-secondary">{{ intervenant.role }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-8">
+                                <h5 class="text-club-green fw-bold mb-3">À propos</h5>
+                                
+                                {% if intervenant.description %}
+                                    <div class="bg-gradient-light p-4 rounded-3 mb-4">
+                                        <p class="mb-0 lh-lg">{{ intervenant.description }}</p>
+                                    </div>
+                                {% else %}
+                                    <div class="bg-light p-4 rounded-3 mb-4">
+                                        <p class="text-secondary mb-0">Aucune description disponible pour le moment.</p>
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="d-flex flex-wrap gap-3 justify-content-center mt-4">
+                                    <a href="{{ path('app_intervenant_edit', {'id': intervenant.id}) }}" class="btn btn-club btn-lg">
+                                        <i class="bi bi-pencil me-2"></i>Modifier
+                                    </a>
+                                    <a href="{{ path('app_intervenant_index') }}" class="btn btn-outline-club btn-lg">
+                                        <i class="bi bi-arrow-left me-2"></i>Retour à la liste
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="bi bi-trash me-2"></i>Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Confirmer la suppression
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer l'intervenant <strong>"{{ intervenant.name }}"</strong> ?</p>
+                <p class="text-secondary">Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Annuler
+                </button>
+                {{ include('intervenant/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

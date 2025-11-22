@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'Intervenant - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    <i class="bi bi-pencil-square me-3"></i>Modifier l'intervenant
+                </h1>
+                <p class="lead">Modifiez les informations de cet intervenant</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    {{ include('intervenant/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+</section>
+{% endblock %}

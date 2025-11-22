@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="form-container shadow-lg">
+                <div class="text-center mb-4">
+                    <i class="bi bi-heart-fill text-danger me-2" style="font-size: 2rem;"></i>
+                    <h2 class="fw-bold text-primary">Connexion</h2>
+                    <p class="text-muted">Accédez à votre espace membre</p>
+                </div>
+
+                <form method="post" class="modern-form">
+                    {% if error %}
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="alert alert-info d-flex align-items-center" role="alert">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            <div>
+                                Vous êtes connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>
+                                <a href="{{ path('app_logout') }}" class="btn btn-sm btn-outline-primary ms-2">Se déconnecter</a>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-4">
+                        <div class="form-floating">
+                            <input type="email" 
+                                   value="{{ last_username }}" 
+                                   name="email" 
+                                   id="inputEmail" 
+                                   class="form-control" 
+                                   placeholder="Votre adresse email"
+                                   autocomplete="email" 
+                                   required 
+                                   autofocus>
+                            <label for="inputEmail">
+                                <i class="bi bi-envelope me-2"></i>Adresse email
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-floating">
+                            <input type="password" 
+                                   name="password" 
+                                   id="inputPassword" 
+                                   class="form-control" 
+                                   placeholder="Votre mot de passe"
+                                   autocomplete="current-password" 
+                                   required>
+                            <label for="inputPassword">
+                                <i class="bi bi-lock me-2"></i>Mot de passe
+                            </label>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                    <div class="d-grid">
+                        <button class="btn btn-club btn-lg" type="submit">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted">
+                            Pas encore de compte ? 
+                            <a href="{{ path('app_register') }}" class="text-primary fw-bold">Créer un compte</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

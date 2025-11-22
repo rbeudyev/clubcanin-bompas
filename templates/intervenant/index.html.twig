@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Intervenants - Club Canin de Bompas{% endblock %}
+
+{% block body %}
+<section class="club-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">
+                    <i class="bi bi-people me-3"></i>Intervenants
+                </h1>
+                <p class="lead">Découvrez notre équipe de moniteurs et intervenants.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        {% if intervenants|length > 0 %}
+            <div class="row g-4">
+                {% for intervenant in intervenants %}
+                <div class="col-lg-6 col-xl-4">
+                    <div class="card h-100 shadow-sm border-0 hover-lift">
+                        <div class="card-body text-center p-4">
+                            {% if intervenant.photo %}
+                                <img src="{{ asset('uploads/' ~ intervenant.photo) }}" class="rounded-circle mb-3" 
+                                     style="width: 100px; height: 100px; object-fit: cover;" alt="{{ intervenant.name }}">
+                            {% else %}
+                                <div class="bg-club-green rounded-circle p-3 d-inline-block mb-3">
+                                    <i class="bi bi-person-fill text-white" style="font-size: 3rem;"></i>
+                                </div>
+                            {% endif %}
+                            
+                            <h5 class="card-title text-club-green fw-bold mb-3">{{ intervenant.name }}</h5>
+                            
+                            {% if intervenant.role %}
+                                <div class="bg-light p-2 rounded-3 mb-3">
+                                    <p class="text-secondary mb-0">
+                                        <i class="bi bi-star-fill text-club-gold me-1"></i>
+                                        <strong>{{ intervenant.role }}</strong>
+                                    </p>
+                                </div>
+                            {% endif %}
+                            
+                            {% if intervenant.description %}
+                                <p class="card-text text-secondary lh-lg flex-grow-1 mb-3">{{ intervenant.description|length > 120 ? intervenant.description|slice(0, 120) ~ '...' : intervenant.description }}</p>
+                            {% endif %}
+                            
+                            <div class="d-flex gap-2 mt-auto">
+                                <a href="{{ path('app_intervenant_show', {'id': intervenant.id}) }}" class="btn btn-primary btn-sm flex-fill">
+                                    <i class="bi bi-eye me-1"></i>Voir profil
+                                </a>
+                                <a href="{{ path('app_intervenant_edit', {'id': intervenant.id}) }}" class="btn btn-outline-club btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <div class="card border-0 bg-light">
+                    <div class="card-body py-5">
+                        <i class="bi bi-people text-secondary mb-3" style="font-size: 4rem;"></i>
+                        <h4 class="text-secondary mb-3">Aucun intervenant pour le moment</h4>
+                        <p class="text-secondary mb-4">L'équipe de moniteurs sera bientôt présentée !</p>
+                        <a href="{{ path('app_intervenant_new') }}" class="btn btn-club">
+                            <i class="bi bi-plus-circle me-2"></i>Ajouter le premier intervenant
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if intervenants|length > 0 %}
+        <div class="text-center mt-5">
+            <a href="{{ path('app_intervenant_new') }}" class="btn btn-club btn-lg">
+                <i class="bi bi-plus-circle me-2"></i>Ajouter un nouvel intervenant
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
