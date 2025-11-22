@@ -1,0 +1,17 @@
+# Redirection vers le dossier public/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Ne pas rediriger si on est déjà dans public/
+    RewriteCond %{REQUEST_URI} ^/public/
+    RewriteRule ^ - [L]
+    
+    # Rediriger toutes les autres requêtes vers public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ /public/$1 [L]
+</IfModule>
+
+# Protection des fichiers sensibles à la racine
+<FilesMatch "^(composer\.(json|lock)|\.env|\.env\.local)">
+    Require all denied
+</FilesMatch>
